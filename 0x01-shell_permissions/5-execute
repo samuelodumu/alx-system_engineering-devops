@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod 744 hello | echo "-rwxr--r--"
+chmod 744 hello
