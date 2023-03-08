@@ -1,6 +1,3 @@
 #!/bin/bash
-<<<<<<< HEAD
 grep "[A-Za-Z]*" /etc/ssh/sshd_config | grep -v '[#$0-9]'
-=======
-grep "[A-Za-Z]*" /etc/ssh/sshd_config | grep -v '#'
->>>>>>> 2a9eef15d7ea3a3fb4a01a39b34b8eccbeaeb3e8
+
