@@ -1,2 +1,2 @@
 #!/bin/bash
-cat -n | cut -c 6- | grep -vP "[02468]" | cut -f 2
+cat -n | cut -c 6- | grep -vP "[02468]	" | cut -f 2
