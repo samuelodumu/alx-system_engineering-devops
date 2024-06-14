@@ -6,5 +6,5 @@ pid=$(pgrep -f "$process_name")
 
 if [ -n "$pid" ];
 then
-	pkill $process_name
+	pkill -f "$process_name"
 fi
