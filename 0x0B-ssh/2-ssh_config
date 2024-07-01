@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# an ssh config file to use the private key '~/.ssh/school'
+
+PubkeyAuthentication yes
+BatchMode yes
+IdentitiesOnly yes
+IdentityFile ~/.ssh/school
+
+ssh-keygen -f 'school'
+ssh-copy-id -i ~/.ssh/school ubuntu@3.84.158.82
