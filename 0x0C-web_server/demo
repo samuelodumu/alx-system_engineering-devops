@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+echo $#
+
+if [ $# = 3 ] 
+then
+	echo "3 parameteres passed: $1, $2 and $3"
+fi
