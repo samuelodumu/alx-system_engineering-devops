@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# script that installs nginx and posts hello world at its root
+
+ssh ubuntu@3.84.158.82
+apt-get -y update
+apt-get -y upgrade
+apt-get -y install nginx
+uf allow 'Nginx HTTP'
+service nginx start
+
+curl -X PUT ubuntu@3.84.158.82/var/www/html/index.nginx-debian.html -H "Content-type: text/html" -d '<html><body><h1>Hello, World!</h1></body></html>'
