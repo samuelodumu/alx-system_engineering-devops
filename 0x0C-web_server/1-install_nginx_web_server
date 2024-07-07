@@ -9,3 +9,5 @@ uf allow 'Nginx HTTP'
 service nginx start
 
 curl -X PUT ubuntu@3.84.158.82/var/www/html/index.nginx-debian.html -H "Content-type: text/html" -d '<html><body><h1>Hello, World!</h1></body></html>'
+
+service nginx restart
