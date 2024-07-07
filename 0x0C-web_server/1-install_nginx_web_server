@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 # script that installs nginx and posts hello world at its root
 
-ssh ubuntu@3.84.158.82
 apt-get -y update
 apt-get -y upgrade
 apt-get -y install nginx
-uf allow 'Nginx HTTP'
 service nginx start
 
-echo "Hello, World!" > /var/www/html/index.html
+echo 'Hello, World!' > /var/www/html/index.html
 
 service nginx restart
