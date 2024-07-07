@@ -8,6 +8,6 @@ apt-get -y install nginx
 uf allow 'Nginx HTTP'
 service nginx start
 
-curl -X POST ubuntu@3.84.158.82/var/www/html/index.nginx-debian.html -d '<html><body><h1>Hello, World!</h1></body></html>'
+echo "Hello, World!" > /var/www/html/index.nginx-debian.html
 
 service nginx restart
