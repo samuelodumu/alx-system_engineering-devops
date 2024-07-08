@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # script that installs nginx and posts hello world at its root
 
-apt-get -y update
-apt-get -y upgrade
-apt-get -y install nginx
+if [ ! -e /usr/sbin/nginx ];
+then
+	apt-get -y update
+	apt-get -y upgrade
+	apt-get -y install nginx
+fi
 
 if [ ! -e '/var/www/html' ];
 then
