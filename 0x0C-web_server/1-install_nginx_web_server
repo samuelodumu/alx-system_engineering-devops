@@ -2,6 +2,7 @@
 # script that installs nginx and posts hello world at its root
 
 apt-get -y update
+apt-get -y upgrade
 apt-get -y install nginx
 ufw allow 'Nginx HTTP'
 echo "Hello World!" > /var/www/html/index.html
