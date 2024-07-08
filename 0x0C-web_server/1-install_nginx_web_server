@@ -4,15 +4,15 @@
 if [ ! -e /usr/sbin/nginx ];
 then
 	apt-get -y update
-	apt-get -y upgrade
 	apt-get -y install nginx
+	ufw allow 'Nginx HTTP'
 fi
 
-if [ ! -e '/var/www/html' ];
+if [ ! -e /var/www/html ];
 then
 	mkdir -p /var/www/html
 fi
 
-echo 'Hello World!' > /var/www/html/index.html
+echo "Hello World!" > /var/www/html/index.html
 
 service nginx restart
