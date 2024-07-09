@@ -1,27 +1,27 @@
 #!/usr/bin/env bash
 # configures the server to redirect the '/redirect_me' page to
 # another page
+apt-get update
+apt-get -y install nginx
+
 NGINX_CONF="/etc/nginx/sites-available/default"
-REDIRECTION="location /redirect_me {
-        return 301 http://themainsamuel.tech;
-}"
+NEW_TEXT="server_name _;\n\trewrite ^\/redirect_me https:\/\/themainsamuel.tech permanent;"
 
-sudo cp $NGINX_CONF ${NGINX_CONF}.bak
+cp $NGINX_CONF ${NGINX_CONF}.bak
 
-if grep -q "location /redirect_me" $NGINX_CONF;
+if grep -q "server_name _;\n\trewrite" $NGINX_CONF;
 then
         echo "Redirection already exists in the config file"
 else
-        sudo sed -i "/server {/a
-        $REDIRECTION" $NGINX_CONF
+        sed -i "s/server_name_;/$NEW_TEXT/" $NGINX_CONF
 fi
-sudo nginx -t
 
-if [ $? -eq 0 ]; then
-        sudo service nginx reload
+if sudo nginx -t;
+then
+        service nginx reload
         echo "Nginx configuration reloaded successfully."
 else
         echo "Nginx configuration test failed. Please check the configuration."
-        sudo cp ${NGINX_CONF}.bak $NGINX_CONF
-        sudo service nginx reload
+        cp ${NGINX_CONF}.bak $NGINX_CONF
+        service nginx reload
 fi
