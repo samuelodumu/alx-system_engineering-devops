@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+echo "Ceci n'est pas une page" > /var/www/not-found.html
