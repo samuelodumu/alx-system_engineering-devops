@@ -2,12 +2,14 @@
 # configures the server to redirect the '/redirect_me' page to
 # another page
 apt-get update
+apt-get -y upgrade
 apt-get -y install nginx
 ufw allow 'Nginx HTTP'
 echo "Hello World!" > /var/www/html/index.html
+service nginx start
 
 NGINX_CONF="/etc/nginx/sites-available/default"
-NEW_TEXT="server_name _;\n\trewrite ^\/redirect_me https:\/\/themainsamuel.tech permanent;"
+NEW_TEXT="server_name _;\n\trewrite ^\/redirect_me https:\/\/gravatar.com\/themainsamuel permanent;"
 
 cp $NGINX_CONF ${NGINX_CONF}.bak
 
