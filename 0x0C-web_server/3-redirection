@@ -13,7 +13,7 @@ if grep -q "server_name _;\n\trewrite" $NGINX_CONF;
 then
         echo "Redirection already exists in the config file"
 else
-        sed -i "s/server_name_;/$NEW_TEXT/" $NGINX_CONF
+        sed -i "s/server_name _;/$NEW_TEXT/" $NGINX_CONF
 fi
 
 if sudo nginx -t;
