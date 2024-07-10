@@ -1,20 +1,27 @@
 #!/usr/bin/env bash
-# custom 404 page '/404.html'
-echo "Ceci n'est pas une page" | sudo tee /var/www/404.html
+# custom 404 handler
 
-config_lines="root \/var\/www\/html;\n\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt-get -y install nginx
+
+echo "Hello World!" | sudo tee /var/www/html/index.html
 config_file_path="/etc/nginx/sites-available/default"
+redirect_text="server_name _;\n\trewrite ^\/redirect_me https:\/\/gravatar.com\/themainsamuel permanent;"
 
-cp $config_file_path ${config_file_path}.bak
+sudo cp $config_file_path ${config_file_path}.bak
 
-sed -i "s/root \/var\/www\/html;/$config_lines/" $config_file_path
+sudo sed -i "s/server_name _;/$redirect_text/" $config_file_path
+sudo sed -i '/^}$/i \ \n\tlocation @404 {\n\t\treturn 404 "Ceci n'\''est pas une page\\n";\n\t}' $config_file_path
+sudo sed -i 's/=404/@404/g' $config_file_path
 
-if nginx -t;
+if sudo nginx -t;
 then
-	service nginx reload
-	echo "Reload successful"
+        sudo service nginx restart
+        sudo service nginx reload
+        echo "Reload successful"
 else
-	echo "Unsuccessful configuration"
-	cp ${config_file_path}.bak $config_file_path
-	service nginx reload
+        echo "Unsuccessful configuration"
+        sudo cp ${config_file_path}.bak $config_file_path
+        sudo service nginx reload
 fi
