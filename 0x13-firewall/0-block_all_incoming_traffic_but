@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # allow only port 22 (OpenSSH) and deny all others
 
+sudo apt-get update
+sudo apt install ufw
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
-sudo ufw allow OpenSSH
 sudo ufw allow 22
 sudo ufw enable
