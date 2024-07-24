@@ -14,4 +14,4 @@ chmod 644 /etc/nginx/nginx.conf
 # apache may interfere with nginx if they both listen on port 8080 so kill the process
 pkill apache2
 
-service nginx start
+sudo -u nginx service nginx start
