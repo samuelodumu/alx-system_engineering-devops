@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # starts nginx as the `nginx` user
 
-echo 'user nginx;' >> /etc/nginx/nginx.conf
+# add user to root group
+usermod -a -G root nginx
+sed -i 's/#user www-data/user nginx/g' /etc/nginx/nginx.conf
 chmod 644 /etc/nginx/nginx.conf
 sed -i 's/80/8080/g' /etc/nginx/sites-available/default
 sudo -u nginx service nginx start
