@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
 # starts nginx as the `nginx` user
 
-# add user to root group
-usermod -a -G root nginx
+# modify nginx.conf to run as `nginx`
 sed -i 's/#user www-data/user nginx/g' /etc/nginx/nginx.conf
+
+# modify nginx config file to listen on port 8080
+sed -i 's/listen 80 default_server;/listen 8080 default_server;/g' /etc/nginx/sites-available/default
+sed -i 's/listen \[::\]:80 default_server;/listen \[::\]:8080 default_server;/g' /etc/nginx/sites-available/default
+
+# add appropriate permissions
 chmod 644 /etc/nginx/nginx.conf
-sed -i 's/80/8080/g' /etc/nginx/sites-available/default
-sudo -u nginx service nginx start
+
+# apache may interfere with nginx if they both listen on port 8080 so kill the process
+pkill apache2
+
+service nginx start
