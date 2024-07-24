@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# starts nginx as the `nginx` user
+
+sudo useradd nginx
+sudo runuser -u nginx -- "service nginx start"
+# sudo -u "nginx" service nginx start 
