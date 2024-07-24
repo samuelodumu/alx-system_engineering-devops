@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # starts nginx as the `nginx` user
 
-sudo useradd nginx
-sudo runuser -u nginx -- "service nginx start"
-# sudo -u "nginx" service nginx start 
+echo 'user nginx;' >> /etc/nginx/nginx.conf
+chmod 644 /etc/nginx/nginx.conf
+sed -i 's/80/8080/g' /etc/nginx/sites-available/default
+sudo -u nginx service nginx start
