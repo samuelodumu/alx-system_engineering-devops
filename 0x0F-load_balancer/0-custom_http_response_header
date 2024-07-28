@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# configures a web-02 to be identical to web-01
+
+# install nginx
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+sudo service nginx start
+sudo service nginx status
+
+# install docker
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+apt-cache policy docker-ce > /dev/null
+sudo apt install docker-ce
+sudo systemctl status docker
+
+# configure themainsamuel.tech/redirect_me and 404 page
+echo "Hello World!" | sudo tee /var/www/html/index.html
+config_file="/etc/nginx/sites-available/default"
+redirection="server_name _;\n\trewrite ^\/redirect_me https:\/\/gravatar.com\/themainsamuel permanent;"
+
+sudo cp $config_file ${config_file}.bak
+
+if grep -q "server_name _;\n\trewrite" $config_file;
+then
+        echo "Redirection already exists in the config file"
+else
+        sudo sed -i "s/server_name _;/$redirection/" $config_file
+	sudo sed -i '/^}$/i \ \n\tlocation @404 {\n\t\treturn 404 "Ceci n'\''est pas une page\\n";\n\t}' $config_file
+	sudo sed -i 's/=404/@404/g' $config_file
+fi
+
+if sudo nginx -t;
+then
+        sudo service nginx reload
+        echo "Nginx configuration reloaded successfully."
+else
+        echo "Nginx configuration test failed. Please check the configuration."
+        cp ${config_file}.bak $config_file
+        sudo service nginx reload
+fi
+
+# add custom header
+sudo sed -i "0,/location \/ {/s/location \/ {/&\n\t\tadd_header X-Served-By '$HOSTNAME';/" $config_file

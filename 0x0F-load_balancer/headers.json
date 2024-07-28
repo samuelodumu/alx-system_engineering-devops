@@ -1,0 +1,10 @@
+{
+  "response_headers_policy": {
+    "headers": [
+      {
+        "name": "X-Custom-Header",
+        "value": "CustomValue"
+      }
+    ]
+  }
+}
