@@ -44,4 +44,10 @@ else
 fi
 
 # add custom header
-sudo sed -i "0,/location \/ {/s/location \/ {/&\n\t\tadd_header X-Served-By '$HOSTNAME';/" $config_file
+# add map function to /etc/nginx/nginx.conf
+map_func="http {\n\tmap \$hostname \$server_hostname {\n\t\tdefault \$hostname;\n\t}"
+sudo sed -i "s/http {/$map_func/" /etc/nginx/nginx.conf
+
+# custom header directive
+replacement_text="try_files \$uri \$uri\/ @404;\n\tadd_header X-Served-By \$server_hostname;"
+sudo sed -i "s/try_files \$uri \$uri\/ @404;/$replacement_text/" $config_file
