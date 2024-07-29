@@ -6,8 +6,13 @@ sudo apt-get update
 sudo apt-get -y upgrade
 sudo apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
-sudo service nginx start
-sudo service nginx status
+
+# make the html directory and create the index page
+sudo mkdir -p /var/www/html
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# change permissions to allow us to easily create files in this directory
+sudo chmod -R 755 /var/www
 
 # install docker
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
@@ -18,7 +23,6 @@ sudo apt install docker-ce
 sudo systemctl status docker
 
 # configure themainsamuel.tech/redirect_me and 404 page
-echo "Hello World!" | sudo tee /var/www/html/index.html
 config_file="/etc/nginx/sites-available/default"
 redirection="server_name _;\n\trewrite ^\/redirect_me https:\/\/gravatar.com\/themainsamuel permanent;"
 
@@ -49,5 +53,7 @@ map_func="http {\n\tmap \$hostname \$server_hostname {\n\t\tdefault \$hostname;\
 sudo sed -i "s/http {/$map_func/" /etc/nginx/nginx.conf
 
 # custom header directive
-replacement_text="try_files \$uri \$uri\/ @404;\n\t\tadd_header X-Served-By \$server_hostname;"
+replacement_text="try_files \$uri \$uri\/ @404;\n\tadd_header X-Served-By \$server_hostname;"
 sudo sed -i "s/try_files \$uri \$uri\/ @404;/$replacement_text/" $config_file
+
+sudo service nginx start
