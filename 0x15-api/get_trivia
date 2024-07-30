@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+curl "https://opentdb.com/api.php?amount=1&category=18" | tee -a trivias.json
