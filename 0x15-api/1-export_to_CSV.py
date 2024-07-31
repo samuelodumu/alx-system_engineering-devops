@@ -16,8 +16,8 @@ if __name__ == '__main__':
 
     employee_csv = ''
     for todo in user_todos_data:
-        line = f'"{employee_id}", "{user_data[0].get("username")}", '\
-                f'"{todo.get("completed")}", "{todo.get("title")}"\n'
+        line = f'"{employee_id}","{user_data[0].get("username")}",'\
+                f'"{todo.get("completed")}","{todo.get("title")}"\n'
         employee_csv += line
 
     with open(file_name, 'w') as f:
