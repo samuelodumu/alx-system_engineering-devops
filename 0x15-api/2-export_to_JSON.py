@@ -15,8 +15,8 @@ if __name__ == '__main__':
     user_todos_data = requests.get(f'{url}{todos}').json()
 
     user_dict = {f"{user_id}": []}
-    json_line = {}
     for todo in user_todos_data:
+        json_line = {}
         json_line[f"task"] = todo["title"]
         json_line[f"completed"] = todo[f"completed"]
         json_line[f"username"] = user_data[f"username"]
