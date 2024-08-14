@@ -13,7 +13,7 @@ def top_ten(subreddit):
     res = req.get(url, allow_redirects=False, headers=header, params=param)
     if res.status_code == 200:
         data = res.json()
-        for post in data["data"]["children"]:
-            print(post["data"]["title"])
+        for post in data["data"]["children"][2:]:
+            print(f"{post['data']['title']}")
     else:
         print(None)
