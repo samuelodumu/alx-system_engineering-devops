@@ -10,7 +10,7 @@ def recurse(subreddit, after=None):
     hot articles for a given subreddit"""
     headers = {"User-Agent": "Chrome"}
     params = {"after": after}
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+    url = f"https://www.reddit.com/r/subreddit/hot.json"
     response = requests.get(url, allow_redirects=False,
                             headers=headers, params=params)
     all_posts = []
