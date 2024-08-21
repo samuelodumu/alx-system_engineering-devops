@@ -1,8 +1,7 @@
 # increases worker processes and restarts nginx
 
-exec {'increase_worker_processes':
-  command => "sudo sed -i 's/worker_connections.*/worker_connections 1024;/' /etc/nginx/nginx.conf",
-  onlyif  => "sudo grep -q 'worker_connections 1024;' /etc/nginx/nginx.conf",
+exec {'raise_system_limits':
+  command => "sudo sed -i 's/ULIMIT=\"-n 15\"/ULIMIT=\"-n 102400\"/' /etc/default/nginx",
   path    => ['/bin', '/usr/bin'],
   notify  => Exec['restart_nginx'],
 }
